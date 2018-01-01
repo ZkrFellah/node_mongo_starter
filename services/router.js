@@ -1,16 +1,12 @@
 var ItemsController = require('../controllers/itemsController');
 var router = require('express').Router();
 
-router.route('/items/insert')
-  .post(ItemsController.insert);
+router.route('/items')
+  .post(ItemsController.insertItem)
+  .get(ItemsController.listItem);
 
-router.route('/items/list')
-  .post(ItemsController.list);
-
-router.route('/items/delete/:id')
-  .get(ItemsController.delete_item);
-
-router.route('/items/update/:id')
-  .post(ItemsController.update_item)
+router.route('/items/:id')
+  .delete(ItemsController.deleteItem)
+  .put(ItemsController.updateItem);
 
 module.exports = router;

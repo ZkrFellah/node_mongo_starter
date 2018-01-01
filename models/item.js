@@ -8,13 +8,7 @@ var itemSchema = new Schema({
   },
   attr2: {
     type: String
-  },
-  attr3: [
-    {
-      attr3_1: {type: String},
-      attr3_2: {type: Boolean}
-    }
-  ]
+  }
 });
 
 

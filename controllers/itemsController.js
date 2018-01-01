@@ -1,16 +1,15 @@
 const Item = require('../models/item');
 
-exports.insert = function(req, res, next) {
-  var attr1 = req.body.attr1;
+exports.insertItem = function(req, res, next) {
+  var attr1  = req.body.attr1;
+  var attr2  = req.body.attr2;
   if (!attr1) {
     return res.status(400).json({error: "attr1 is required"});
   }
-  var attr2 = req.body.attr2;
-  var attr3 = req.body.attr3;
+    
   var item = new Item({
     attr1: attr1,
-    attr2: attr2,
-    attr3: attr3
+    attr2: attr2
   });
   item.save(function(err) {
     if (err) { return res.status(400).json(err); }
@@ -18,25 +17,28 @@ exports.insert = function(req, res, next) {
   });
 }
 
-exports.list = function(req, res, next){
+exports.listItem = function(req, res, next){
   Item.find({}, function (err, items) {
-        res.json(items);
+    if (err) { return res.status(400).json(err); }
+    res.status(200).json(items);
   });
 }
-exports.delete_item = function(req, res, next){
+exports.deleteItem = function(req, res, next){
   Item.findById(req.params.id, function(err, item){
     item.remove(function(err, item) {
-      console.log("item deleted");
+      if (err) { return res.status(400).json(err); }
+      res.status(200).json({message : 'item deleted'});
     });
   });
 }
-exports.update_item = function(req, res, next) {
- Item.findById(req.params.id, function(err, task){
-    item.att1 = req.body.att1;
-    item.att2 = req.body.att2;
-    item.att3 = req.body.att3;
-    item.save(function(err, item, count){
-      console.log(" item has been updated!");
+exports.updateItem = function(req, res, next) {
+ Item.findById(req.params.id, function(err, item){
+   console.log(item)
+    item.attr1 = req.body.attr1;
+    item.attr2 = req.body.attr2;
+    item.save(function(err){
+      if (err) { return res.status(400).json(err); }
+      res.status(200).json({message : "item updated"});
     })
   });
 };

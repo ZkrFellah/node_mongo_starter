@@ -10,6 +10,7 @@ var router = require('./services/router');
 mongoose.connect('mongodb://localhost:27017/yassir', { useMongoClient: true });
 
 app.use(morgan('combined'));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use('/api', router);
 
