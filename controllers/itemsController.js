@@ -33,7 +33,6 @@ exports.deleteItem = function(req, res, next){
 }
 exports.updateItem = function(req, res, next) {
  Item.findById(req.params.id, function(err, item){
-   console.log(item)
     item.attr1 = req.body.attr1;
     item.attr2 = req.body.attr2;
     item.save(function(err){
