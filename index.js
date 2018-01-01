@@ -7,7 +7,7 @@ const mongoose = require('mongoose');
 var app = express();
 var router = require('./services/router');
 
-mongoose.connect('mongodb://localhost:itemStarter/itemStarter');
+mongoose.connect('mongodb://localhost:27017/yassir', { useMongoClient: true });
 
 app.use(morgan('combined'));
 app.use(bodyParser.json());
