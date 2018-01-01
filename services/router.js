@@ -1,16 +1,20 @@
-const ItemsController = require('../controllers/itemsController');
-var router = require('express').Router();
+import Router from 'express';
+import { 
+  insertItem,
+  getItems, 
+  deleteItem, 
+  updateItem
+} from '../controllers/itemsController';
 
-router.route('/items/insert')
-  .post(ItemsController.insert);
+const router = Router();
 
-router.route('/items/list')
-  .post(ItemsController.list);
+router.route('/items')
+  .get(getItems ) 
+  .post(insertItem);
 
-router.route('/items/delete/:id')
-  .get(ItemsController.delete_item);
+router.route('/items/:itemId')
+  .put(updateItem)
+  .delete(deleteItem);
 
-router.route('/items/update/:id')
-  .post(ItemController.update_item)
 
-module.exports = router;
+export default router;

@@ -1,21 +1,21 @@
-const express = require('express');
-const morgan = require('morgan');
-const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
+import express from 'express';
+import morgan from 'morgan';
+import bodyParser from 'body-parser';
+import mongoose from 'mongoose';
+import  router  from './services/router';
+
+const app = express();
 
 
-var app = express();
-var router = require('./services/router');
-
-mongoose.connect('mongodb://localhost:itemStarter/itemStarter');
+mongoose.connect('mongodb://localhost:27017/names', { useMongoClient: true });
 
 app.use(morgan('combined'));
 app.use(bodyParser.json());
 app.use('/api', router);
 
-var PORT = process.env.PORT || 3000;
-var HOST = process.env.HOST || '0.0.0.0';
+const PORT = process.env.PORT || 3000;
+const HOST = process.env.HOST || '0.0.0.0';
 
 app.listen(PORT, HOST, function(){
-  console.log('listening...');
+  console.log('listening on port :' + PORT);
 });

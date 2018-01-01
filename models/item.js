@@ -1,8 +1,9 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
+
 const Schema = mongoose.Schema;
 
 
-var itemSchema = new Schema({
+const itemSchema = new Schema({
   attr1: {
     type: Number
   },
@@ -17,5 +18,3 @@ var itemSchema = new Schema({
   ]
 });
 
-
-module.exports = mongoose.model('item', itemSchema);

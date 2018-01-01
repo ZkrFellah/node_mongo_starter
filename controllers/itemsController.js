@@ -1,42 +1,42 @@
-const Item = require('../models/item');
+const Item = mongoose.model('item', itemSchema);
 
-exports.insert = function(req, res, next) {
-  var attr1 = req.body.attr1;
+function insertItem(req, res, next) {
+  const { attr1 ,attr2 ,attr3 } = req.body;
   if (!attr1) {
     return res.status(400).json({error: "attr1 is required"});
   }
-  var attr2 = req.body.attr2;
-  var attr3 = req.body.attr3;
-  var item = new Item({
+  const item = new Item({
     attr1: attr1,
     attr2: attr2,
     attr3: attr3
   });
   item.save(function(err) {
     if (err) { return res.status(400).json(err); }
-    res.json({item_id: item._id});
+    return res.status(200).json({item_id: item._id});
   });
 }
 
-exports.list = function(req, res, next){
+function getItems(req, res, next){
   Item.find({}, function (err, items) {
-        res.json(items);
+    if (err) { return res.status(400).json(err); }
+    return res.status(200).json(items);
   });
 }
-exports.delete_item = function(req, res, next){
-  Item.findById(req.params.id, function(err, item){
+
+function deleteItem(req, res, next){
+  Item.findById(req.params.itemId, function(err, item){
     item.remove(function(err, item) {
-      console.log("item deleted");
+      return res.status(200).json({deleted: req.params.itemId});
     });
   });
 }
-exports.update_item = function(req, res, next) {
- Item.findById(req.params.id, function(err, task){
-    item.att1 = req.body.att1;
-    item.att2 = req.body.att2;
-    item.att3 = req.body.att3;
+function updateItem(req, res, next) {
+ Item.findById(req.params.itemId, function(err, task){
+  const { attr1 ,attr2 ,attr3 } = req.body;
     item.save(function(err, item, count){
-      console.log(" item has been updated!");
+      return res.status(200).json({updated: req.params.itemId});
     })
   });
 };
+
+export { insertItem, getItems, deleteItem, updateItem }
